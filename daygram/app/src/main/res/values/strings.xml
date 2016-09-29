@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">daygram</string>
+
+    <item name="tag_first" type="id"></item>
+    <item name="tag_second" type="id"></item>
+    <item name="tag_third" type="id"></item>
+
+    <item name="tag_chosen" type="id"></item>
+    <item name="tag_not_chosen" type="id"></item>
+</resources>
