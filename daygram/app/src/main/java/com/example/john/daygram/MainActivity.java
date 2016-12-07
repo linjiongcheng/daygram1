@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.format.Time;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -72,14 +73,23 @@ public class MainActivity extends AppCompatActivity {
         allData.setData((List<Data>)getObject("daygram"));
         allListData = allData.getData();
 
+        //获取系统当前日期
+        final Calendar c = Calendar.getInstance();
+        c.setTimeZone(TimeZone.getTimeZone("GMT+8:00"));
+        final int year = c.get(Calendar.YEAR);
+        final int month = c.get(Calendar.MONTH);
+        final int day = c.get(Calendar.DAY_OF_MONTH);
+        final int week = c.get(Calendar.DAY_OF_WEEK);
+
         //实现年份的选择
         final Spinner spinner = (Spinner)findViewById(R.id.year);
         spinner.getSelectedItem();
-        spinner.setSelection(6);                //设置默认显示的年份是2016
+        int yearOrder = year - 2016;
+        spinner.setSelection(yearOrder);                //设置默认显示的是当前年份
         //实现月份的选择
         final Spinner spinner2 = (Spinner)findViewById(R.id.month);
         spinner2.getSelectedItem();
-        spinner2.setSelection(8);               //设置默认显示的月份是9月
+        spinner2.setSelection(month);               //设置默认显示的是当前月份
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -114,12 +124,11 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent();
                 //获取当前时间
                 String time[] = new String[5];
-                final Calendar c = Calendar.getInstance();
-                c.setTimeZone(TimeZone.getTimeZone("GMT+8:00"));
-                time[0] = String.valueOf(c.get(Calendar.YEAR)); // 获取当前年份
-                time[1] = mEngMonth.get(String.valueOf(c.get(Calendar.MONTH) + 1));// 获取当前月份
-                time[2] = String.valueOf(c.get(Calendar.DAY_OF_MONTH));// 获取当前月份的日期号码
-                time[3] = String.valueOf(c.get(Calendar.DAY_OF_WEEK));
+
+                time[0] = String.valueOf(year); // 获取当前年份
+                time[1] = mEngMonth.get(String.valueOf(month + 1));// 获取当前月份
+                time[2] = String.valueOf(day);// 获取当前月份的日期号码
+                time[3] = String.valueOf(week);
                 Date date = c.getTime();
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
                 String str = sdf.format(date);
